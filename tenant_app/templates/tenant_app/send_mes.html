@@ -1,0 +1,106 @@
+<div class="new_mail">
+    
+    <form action="{% url 'subm_mail' %} " method="post" name="mailform">
+        {% csrf_token %}
+        <!-- <label for="recipient">Получатели:</label> -->
+        <div style="margin-bottom: 30px;">
+            <label class="comontext comlabel" style="margin-bottom: 10px;">Получатели:</label>
+            <multi-input>
+              <input list="speakers">
+              <datalist id="speakers">
+                {% for user in users %}
+                <option value="{{user.email}}"></option>
+                {% endfor %}
+                {% for dl in mailing_list %}
+                <option value="{{dl.name}}"></option>
+                {% endfor %}
+              </datalist>
+            </multi-input>
+            <input type="text" name='mail_list' id ='mail_list' style="display: none;">
+          </div>
+
+          
+          {% load static %}
+
+
+          
+          
+        <!-- <input type="text" name="new_recipient" placeholder="Добавить получателя"> -->
+        <div>
+            <label for="subject" class="comontext comlabel" style="margin-bottom: 5px;">Тема:</label>
+            <input name="subject" type="text" style="margin-bottom: 30px;" placeholder="Напишите сюда тему, вашего письма">
+        </div>
+        
+        <div>
+            <label for="mail_text" class="comontext comlabel" style="margin-bottom: 5px;">Текст:</label>
+            <div class="form_textarea">
+                <textarea name="mail_text" id="" cols="30" rows="10"></textarea>
+            </div>
+            
+        </div>
+        
+        <div>
+            <label for="mail_file" class="comontext comlabel" style="margin-bottom: 10px;">Прикрепить файл</label>
+            <label class="input-file">
+                <input type="file" name="file">
+                 <span class="input-file-btn">Выберите файл</span>           
+                <span class="input-file-text">Максимум 10мб</span>
+            </label>
+            <script>
+                $('.input-file input[type=file]').on('change', function(){
+                    let file = this.files[0];
+                    $(this).closest('.input-file').find('.input-file-text').html(file.name);
+                });
+            </script>
+        </div>
+        
+
+        <div style="display: flex; flex-direction:row;">
+            <input type="button" id="subtn" class="mainbutton rbtn" value="Отправить" style="width: calc( var(--index) *7 );">
+            <button  class="mainbutton " value="Отправить" style="width: calc( var(--index) *7 );"> asdf</button>
+        </div>
+    </form>
+
+    <script src="{% static 'js/multi-input.js'%}"></script>
+    <script>
+        const getButton = document.getElementById('subtn');
+        const multiInput = document.querySelector('multi-input'); 
+        const values = document.querySelector('#mail_list'); 
+        let mailtext = document.querySelector('#mail_text'); 
+        let subject = document.querySelector('#subject'); 
+
+        getButton.onclick = () => {
+        if (multiInput.getValues().length > 0) {
+            values.value = `${multiInput.getValues().join(';')}`;
+        } else {
+            values.value = ''; 
+        }
+        if (subject.value && values.textContent != '' && mailtext.value) {
+            mailform.submit();
+          } else {
+            if (!subject.value) {
+              subject.style.borderBottom =  '1px solid red';
+            }else{
+                subject.style.borderBottom = '1px solid #a0a0a0';
+            }
+            if (!values.value) {
+                multiInput.style.backgroundColor = 'red';
+            }
+            else{
+                multiInput.style.borderBottom = '1px solid #a0a0a0';
+            }
+            if (!mailtext.value) {
+              mailtext.style.backgroundColor = 'red';
+            }
+            else{
+                mailtext.style.borderBottom = '1px solid #a0a0a0';
+            }
+          }
+
+
+        }
+            
+
+      </script>
+      
+</div>

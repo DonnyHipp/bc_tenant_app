@@ -1,0 +1,309 @@
+<div>
+    <div >
+        <script>
+            htmx.onLoad(function(content) {
+        
+                const modeluser = document.getElementById('modaluser');
+                const overlay_user = document.getElementById('overlayuser');
+                const close_btn = document.getElementById('close-btn_user');
+                const createuserbtn = document.getElementById('createuserbtn');
+                const subtn_user = document.getElementById('subtn_user')
+            
+                var tabs = document.querySelectorAll('.editbutton');
+                var username = document.getElementById('username');
+                var password = document.getElementById('password');
+                var confirmpassword = document.getElementById('confirmpassword');
+                var user_id = document.getElementById('user_id_val');
+                var email = document.getElementById('email');
+            
+            
+                createuserbtn.addEventListener('click', () => {
+                    modeluser.classList.add('show');
+                    overlay_user.classList.add('show');
+                    username.value = '';
+                    user_id.value = 0;
+                    email.value = ''
+                    superstatus.checked = false
+
+                  });
+
+
+                for (let i = 0; i < tabs.length; i++) {
+                  tabs[i].addEventListener("click", function(){
+
+                    username.value = tabs[i].dataset.username
+                    email.value = tabs[i].dataset.email
+                    user_id.value = Number(tabs[i].dataset.user_id);
+                    superstatus.checked = tabs[i].dataset.staff.toLowerCase() === "true";
+                    modeluser.classList.add('show');
+                    overlay_user.classList.add('show');
+                    
+                  });}
+            
+                  overlay_user.addEventListener('click', () => {
+                    modeluser.classList.remove('show');
+                    overlay_user.classList.remove('show');
+                  });
+                  close_btn.addEventListener('click', () => {
+                    modeluser.classList.remove('show');
+                    overlay_user.classList.remove('show');
+                  });
+
+
+
+                  subtn_user.onclick = () => {
+
+                    if (email.value && user_id.value == 0 && username.value && password.value && confirmpassword.value ) {
+                        if(password.value == confirmpassword.value){
+                            htmx.trigger(userform, 'submit');
+                            modeluser.classList.remove('show');
+                            overlay_user.classList.remove('show');
+                            console.log(1)
+                        }
+                        else{
+                          console.log(2)
+                            confirmpassword.value = ''
+                            confirmpassword.borderBottom =  '1px solid red';
+                        }
+                    }
+                    else if (email.value && user_id.value != '' && username.value ) {
+                      console.log(3)
+                        htmx.trigger(userform, 'submit');
+                        password.value = ''
+                        confirmpassword.value = ''
+                        modeluser.classList.remove('show');
+                        overlay_user.classList.remove('show');
+                    }
+                    
+                        
+                    
+                    else {
+    
+                        if (!email.value) {
+                            email.style.borderBottom =  '1px solid red';
+                        }
+                        else{
+                            email.style.borderBottom = '1px solid #a0a0a0';
+                        }
+    
+                        if (!username.value) {
+                            username.style.borderBottom = '1px solid red';
+                        }
+                        else{
+                            username.style.borderBottom = '1px solid #a0a0a0';
+                        }
+    
+                        if (!password.value) {
+                            password.style.borderBottom= '1px solid red';
+                        }
+                        else{
+                            password.style.borderBottom = '1px solid #a0a0a0';
+                        }
+    
+                        if (!confirmpassword.value) {
+                            confirmpassword.style.borderBottom= '1px solid red';
+                        }
+                        else{
+                            confirmpassword.style.borderBottom = '1px solid #a0a0a0';
+                        }
+                    }
+    
+                }
+        });
+
+
+
+            
+      </script>
+        
+    <style>
+        #modaluser {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            z-index: 1000;
+            width: 50vw;
+            display: none;
+            box-shadow: 0px 8px 10px 1px rgba(0,0,0,.14), 0px 3px 14px 2px rgba(0,0,0,.12), 0px 5px 5px -3px rgba(0,0,0,.2);
+          }
+          
+          #overlayuser {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(0 0 0 / 60%);
+            z-index: 1;
+            display: none;
+          }
+          #overlayuser.show {
+            display: block;
+          }
+          
+          #modaluser.show {
+            display: block;
+          }
+          
+          .modaluser label{
+            display: inline-block;
+            width: 200px;
+            font-size: calc(var(--index) * 0.7);
+          font-weight: 100;
+          color: var(--font-color);
+          display: flex;
+        align-items: center;
+          }
+          .modaluser form{
+            display: flex;
+            flex-direction: column;
+          }
+          .modaluser form div{
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 30px;
+          }
+          .modaluser form input{
+            display: inline-block;
+            width: 200px;
+          }
+          .editbutton{
+            background: none;
+            border: none;
+            font-size: 12px;
+            color: var(--sfont-color);
+            transition: 0.5s ease-in-out;
+          }
+          .editbutton:hover{
+            background: none;
+            border: none;
+            font-size: 12px;
+            color: #04A2E6;
+          }
+    
+          .delbtnuser{
+            background: none;
+            border: none;
+            font-size: 12px;
+            color: var(--font-color);
+            transition: 0.5s ease-in-out;
+          }
+          .delbtnuser:hover{
+            background: none;
+            border: none;
+            font-size: 12px;
+            color: #e11f1f;
+          }
+          .usersettings{
+            display: flex;
+            flex-direction: row;
+          }
+          .usermail{
+            font-size: 12px;
+            color: var(--sfont-color);
+            transition: 0.2s ease-in-out;
+          }
+          .usermail:hover{
+            font-size: 12px;
+            color: var(--font-color);
+          }
+          .edit-user-form div{
+            margin-bottom: 10px;
+          }
+    </style>
+    <div id="overlayuser"></div>
+        <div class="modaluser" id="modaluser">
+            <form hx-target="#userlist" hx-post="{% url 'change_user' %}" method="post" name="userform" autocomplete="off" id="edit-user-form">
+                <input type="text" name="user_id" id="user_id_val" value="" style="display:none">
+                <div>
+                    <label for="">Имя пользователя</label>
+                    <input type="text"  name="username" id="username">
+                </div>
+                <div>
+                    <label for="">Почта</label>
+                    <input type="text" name="email" id="email">
+                </div>
+            
+                <div>
+                    <label for="">Пароль</label>
+                    <input type="password" name="password" id="password">
+                </div>
+                <div>
+                    <label for="">Подтвердите пароль</label>
+                    <input type="password" name="confirmpassword" id="confirmpassword" >
+                </div>
+                <div>
+                    <label for="">Менеджер</label>
+                    <label class="checkbox">
+                        <input type="checkbox" class="document-checkbox" name="superstatus" id="superstatus" value="">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div style="display: flex; margin-top:20px">
+                    <input type="button" id="subtn_user" class="mainbutton rbtn opbtn_r" value="Отправить" style="width: calc( var(--index) * 25 );">
+                    <button id="close-btn_user" type="button" class="mainbutton opbtn_b" style="width: calc( var(--index) *7 );">Закрыть</button>
+                </div>
+            </form>
+            
+        </div>
+    
+    
+        <h1 style="margin-bottom: 20px;"> Пользователи </h1>
+
+
+
+        <div class="row">
+
+        
+
+        <div class="col-8">
+
+
+
+
+
+            {% csrf_token %}
+            <input style="width: 300px;" type="search" 
+            name="search" placeholder="Поиск..." 
+            hx-post="{% url 'filter_users' %}" 
+            hx-trigger="keyup changed delay:500ms, search" 
+            hx-target="#userlist" 
+            hx-indicator=".htmx-indicator">
+        
+            <div style="margin-top: 20px; display: flex; align-items: center;" hx-include="#delformuser" hx-target="#userlist" hx-confirm="Вы точно хотите удалить пользователя">
+                <!-- <a class="btn" hx-put="/activate">Activate</a>
+                <a class="btn" hx-put="/deactivate">Deactivate</a> -->
+                <input id="select-all-btn" class="checkmarkbtn" type="button" style="margin-left: 0px;">
+                <button hx-post="{% url 'mduser' %}" type="submit" class="delete-button mainbutton" style="margin-left: 20px; width: calc( var(--index) *12 );">Удалить выбранных пользователей</button>
+              </div>
+
+
+            
+    
+                {% csrf_token %}
+            <div style="display: flex; margin-top: 10px; align-items:center;">
+                
+            </div>
+            
+        </div>
+        <div class="col-4">
+            <button class="mainbutton" id="createuserbtn">Создать пользователя</button>
+        </div>
+    </div>
+    </div>
+    
+    <div class="userist" >
+    <div id="userlist">
+        <form method="post" id="delformuser" name="delformuser" class="delformfirst">
+        {% include 'tenant_app/user_list.html' %}
+        </form>
+    </div>
+   
+    </div>
+
+</div>
+
+

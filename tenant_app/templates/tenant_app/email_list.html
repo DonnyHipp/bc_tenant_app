@@ -1,0 +1,25 @@
+<div class="mail_short" id="mail_short">
+    {% if messages %}
+    {% for mes in messages %}
+    <a hx-get="{% url 'get_email_text' mes.id %}" hx-target="#email-details"hx-trigger="click" class="maillink">
+        <div class="shortmes">
+            
+            <div class="topmes">
+                <input type="checkbox">
+                <div class="from ">{{ mes.sender }}</div>
+                <div class="date">{{ mes.date_sent }}</div>
+            </div>
+            
+            <div class="subject text-truncate">{{ mes.subject }}</div>
+            
+        </div>
+    </a>
+    
+    {% endfor %}
+    
+    {% else %}
+        <div class="shortmes">
+        <p>Сообщений нет</p>    
+        </div>
+        {% endif %}
+</div>

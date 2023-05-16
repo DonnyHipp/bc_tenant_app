@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('http://fonts.googleapis.com/css?family=Roboto');
+body{
+    font-family: 'Roboto', sans-serif !important;
+    --main-bg-color: rgb(248, 248, 248);
+    --second-grey:#eeeeee;
+    --btn-color: #579BE4;
+    --font-color:#383638;
+    --btn-war:#BF0A25;
+    background-color: var(--main-bg-color);
+}
+
+.select2-container{
+    width: 100% !important;
+    
+}
+.select2-selection__choice__display{
+    color: rgb(70, 70, 70) !important;
+}
+
+.inline-deletelink{
+border-radius:12px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    display: block;
+}
+
+.btn{
+border-radius: 12px !important;
+}
+
+.brand-link .brand-image {
+    float: left;
+    line-height: .8;
+    margin-left: 0.8rem;
+    margin-right: 0.5rem;
+    margin-top: -3px;
+    max-height: 33px;
+    width: auto;
+}
+.img-b{
+    background-color: none;
+    box-shadow: none;
+}
+
+.brand-link .brand-image {
+
+    margin-left: 0.4rem;
+
+}
+
+
+
+.elevation-3 {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0),0 6px 6px rgba(0, 0, 0, 0)!important;
+}
+
+[class*=sidebar-dark-]{
+color: #f4f5f7;
+}
+
+[class*=sidebar-dark] .brand-link, [class*=sidebar-dark] .brand-link .pushmenu {
+    color: #f4f5f7;
+}
+
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #798eda;
+    color: #f4f5f7;
+    border-radius: 15px;
+    
+
+}
+
+[class*=sidebar-dark-] .nav-header {
+    background-color: inherit;
+    color: #f4f5f7;
+}
+
+[class*=sidebar-dark-] .sidebar a {
+    color: #f4f5f7;
+}
+
+.main-footer {
+    visibility: hidden;
+}
+
+
+.btn-outline-success{
+    border-radius: 15px;
+
+}
+
+.btn-outline-primary {
+
+    border-radius: 15px;
+}
+.btn.btn-flat {
+    border-radius: 15px;
+
+}
+
+
+.breadcrumb {
+    border: 0px solid #f4f5f7;
+}
+
+.timeline>div>.timeline-item {
+    border-radius: 12px;
+}
+.vTextField{
+    border-radius: 12px;
+}
+.card{
+    
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 12px 12px 0px 0px;
+}
+
+
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(1.2); /* IE */
+  -moz-transform: scale(1.2); /* FF */
+  -webkit-transform: scale(1.2); /* Safari and Chrome */
+  -o-transform: scale(1.2); /* Opera */
+  transform: scale(1.2);
+  padding: 10px;
+}
+
+.card-header{
+    background-color: #f4f5f700;
+}
+.selector select{
+    font-size: 1rem;
+}
+option{
+    font-size: 10px;
+
+}
+#jazzy-collapsible .collapsible-header:hover {
+    border-radius: 12px;
+}
+
+.btn{
+    border: 1.5px solid;
+}
+
+.btn-outline-danger {
+    border-radius: 12px
+}
+.btn-outline-info {
+    border-radius: 12px
+}
+.btn-outline-secondary {
+    border-radius: 12px
+}
+
+
+.form-group span{
+    border-radius: 12px !important;
+}
+.form-group input{
+    border-radius: 12px !important;
+}
+.actions label{
+    border-radius: 12px !important;
+}
+input[type=file]
+{
+    border-radius: 0px !important;
+}
+
+
+.object-tools a{
+    background-color: red;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    display: block !important;
+}
+
+.login-logo h1 picture img{
+height: 250px;
+}

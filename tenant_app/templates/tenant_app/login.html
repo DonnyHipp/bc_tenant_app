@@ -1,0 +1,58 @@
+{%  extends 'tenant_app/base.html'%}
+
+{% block title %}
+Вход
+{% endblock title %}
+
+{% block content %}
+<div class="logincard">
+    <div style="text-align: center;">
+        <h1>ВХОД</h1>
+    </div>
+
+<style>
+  input {
+    border-radius: 0px !important;
+    background: none !important;
+    outline: none !important;
+    transition: 0.1s ease-in-out !important;
+
+    display: block !important;
+    border-width:0 0 1px !important;
+    height:50px !important;
+    padding-top:2px !important;
+    letter-spacing:.2px !important;
+    border-bottom: 1px solid #a0a0a0 !important;
+    font-size: 14px !important;
+
+  }
+  
+  input::placeholder {
+    color:#a0a0a0 !important;
+    transition: 0.1s ease-in-out !important;
+  }
+  
+  input:focus {
+    border-bottom: 1px solid var(--font-color ) !important;
+  }
+  
+  input:focus::placeholder {
+    color: #dbdbdb !important;
+  }
+</style>
+
+<form method="post">
+{% csrf_token %}
+    <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+    <div class="stand-form">
+    {{form.as_p}}
+    </div>
+        <button type="submit" class="mainbutton">Авторизоваться</button>
+    </div>
+        <div class="col-md-3"></div>
+</div>
+</form>
+</div>
+{% endblock %}

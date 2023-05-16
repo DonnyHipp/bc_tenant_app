@@ -1,0 +1,40 @@
+<div class="mes_det">
+    <div class="mes_det_head">
+        <div class="mes_det_from">
+            <span class="mes_det_cap">От: </span> {{message.sender}}
+        </div>
+        <div class="mes_det_to">
+            <span class="mes_det_cap">Получатели: </span>
+            {% for rec in message.recipients.all %}
+            <span class="mes_det_rec"> {{rec.email}};</span>
+
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="mes_det_text">
+
+        <div class="mes_det_sub">
+            <span class="mes_det_cap">Тема: </span>
+            {{message.subject}}
+        </div>
+        <div class="mes_det_mailtxt">
+            <span class="mes_det_cap">Текст: </span>
+            {{message.message}}
+        </div>
+        {% if message.file %}
+        <div style="    margin-top: 20px;">
+            <span style="font-size: 12px; margin-right:5px"> Файл: </span>
+            <a href="{{ message.file.url }}" style="color: var(--font-color); 
+            background-color: #818494;
+            
+            padding: 5px;
+            border-radius: 5px; white-space: nowrap;" target="_blank">{{ message.file.name }}</a>
+        </div>
+        {% endif %}
+
+</div>
+
+    
+    
+</div>

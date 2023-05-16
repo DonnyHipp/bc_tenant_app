@@ -1,0 +1,365 @@
+{%  extends 'tenant_app/base.html'%}
+
+{% block title %}
+Главная страница
+{% endblock title %}
+
+{% block content%}
+{% load static %}
+
+
+<style>
+    #popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 50px;
+        z-index: 1000;
+        display: none;
+        box-shadow: 0px 8px 10px 1px rgba(0,0,0,.14), 0px 3px 14px 2px rgba(0,0,0,.12), 0px 5px 5px -3px rgba(0,0,0,.2);
+      }
+      
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0 0 0 / 60%);
+        z-index: 1;
+        display: none;
+      }
+      
+      #overlay.show {
+
+        display: block;
+      }
+      
+      #popup.show {
+        display: block;
+      }
+      
+      #close-popup {
+        margin-top: 10px;
+      }
+      
+</style>
+
+<div class="nav">
+    <ul hx-target="#tab-content" class="tab-menu-item">
+        
+      <li><button  class="mainbutton rbtn newmailbtn" id="open-popup">Новое</button></li>
+      <li><a  hx-get="{% url 'inmes' %}" class="menuitem active" >Входящие</a></li>
+      {% if user.is_staff %}
+      <li><a  hx-get="{% url 'outmes' %}" class="menuitem">Исходящие</a></li>
+ 
+      <li><a  hx-get="{% url 'users' %}" class="menuitem">Пользователи</a></li>
+      <li><a  href="{% url 'admin:tenant_app_mailinglist_changelist' %}" class="menuitem">Рассылка</a></li>
+      {% endif %}
+    </ul>
+  </div>
+
+
+  <div id="popup">
+    <div class="new_mail">
+    
+        <form action="{% url 'subm_mail' %} " method="post" name="mailform" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- <label for="recipient">Получатели:</label> -->
+            <div style="margin-bottom: 30px;">
+                <label class="comontext comlabel" style="margin-bottom: 10px;">Получатели:</label>
+                <multi-input>
+                  <input list="speakers">
+                  <datalist id="speakers">
+                    {% for user in users %}
+                    <option value="{{user.email}}"></option>
+                    {% endfor %}
+                    {% for dl in mailing_list %}
+                    <option value="{{dl.name}}"></option>
+                    {% endfor %}
+                  </datalist>
+                </multi-input>
+                <input type="text" name='mail_list' id ='mail_list' style="display: none;">
+              </div>
+    
+              
+              {% load static %}
+    
+    
+              
+              
+            <!-- <input type="text" name="new_recipient" placeholder="Добавить получателя"> -->
+            <div>
+                <label for="subject" class="comontext comlabel" style="margin-bottom: 5px;">Тема:</label>
+                <input name="subject" id="subject" type="text" style="margin-bottom: 30px;" placeholder="Напишите сюда тему, вашего письма">
+            </div>
+            
+            <div>
+                <label for="mail_text" class="comontext comlabel" style="margin-bottom: 5px;">Текст:</label>
+                <div class="form_textarea">
+                    <textarea name="mail_text" id="mail_text" cols="30" rows="10" placeholder="Введите текст письма"></textarea>
+                </div>
+                
+            </div>
+            
+            <div>
+                <label for="mail_file" class="comontext comlabel" style="margin-bottom: 10px;">Прикрепить файл</label>
+                <label class="input-file">
+                    <input type="file" name="file">
+                     <span class="input-file-btn">Выберите файл</span>           
+                    <span class="input-file-text">Максимум 10мб</span>
+                </label>
+                <script>
+                    $('.input-file input[type=file]').on('change', function(){
+                        let file = this.files[0];
+                        $(this).closest('.input-file').find('.input-file-text').html(file.name);
+                    });
+                </script>
+            </div>
+            
+            <div style="display: flex;">
+                <input type="button" id="subtn" class="mainbutton rbtn opbtn_r" value="Отправить" style="width: calc( var(--index) * 20 );">
+                <button id="close-btn" class="mainbutton opbtn_b" style="width: calc( var(--index) *7 );">Закрыть</button>
+            </div>
+        </form>
+    
+        <script src="{% static 'js/multi-input.js'%}"></script>
+        <script>
+            const getButton = document.getElementById('subtn');
+        const multiInput = document.querySelector('multi-input'); 
+        const multiInput_inpt = document.querySelector('multi-input input'); 
+        const values = document.querySelector('#mail_list'); 
+        const mailtext = document.querySelector('#mail_text'); 
+        const subject = document.querySelector('#subject'); 
+
+        getButton.onclick = () => {
+
+
+                if (multiInput.getValues().length > 0) {
+                    values.value = `${multiInput.getValues().join(';')}`;
+                } else {
+                    values.value = ''; 
+                }
+                console.log(subject.value)
+                console.log(values.value)
+                console.log(mailtext.value)
+                if (subject.value && values.value != '' && mailtext.value) {
+                    mailform.submit();
+                } else {
+                    if (!subject.value) {
+                    subject.style.borderBottom =  '1px solid red';
+                    }else{
+                        subject.style.borderBottom = '1px solid #a0a0a0';
+                    }
+                    if (!values.value) {
+                        multiInput_inpt.style.borderBottom = '1px solid red';
+                    }
+                    else{
+                        multiInput_inpt.style.borderBottom = '1px solid #a0a0a0';
+                    }
+                    if (!mailtext.value) {
+                    mailtext.style.border= '1px solid red';
+                    }
+                    else{
+                        mailtext.style.border = '1px solid #a0a0a0';
+                    }
+                }
+
+            }
+                
+            //document.querySelector('input').focus();
+    
+          </script>
+          
+    </div>
+
+  </div>
+  <div id="overlay"></div>
+  
+  
+<div class="content" id="tab-content" hx-trigger="load">
+
+    {% include 'tenant_app/in_messages.html'%}
+          
+    </div>
+
+
+
+
+{% endblock content%}
+
+
+{% block jsend %}
+<script>
+    var tabs = document.querySelectorAll('.menuitem');
+  
+    
+    for (let i = 0; i < tabs.length; i++) {
+      tabs[i].addEventListener("click", function(){
+        
+
+  
+      // удаляем класс "active" у всех табов
+      tabs.forEach(function (tab) {
+        tab.classList.remove('active');
+      });
+    
+      // добавляем класс "active" к текущему табу
+      tabs[i].classList.add('active');
+          
+      });
+      
+  }
+  
+  </script>
+  
+  <script>
+  
+  const openPopupButton = document.getElementById('open-popup');
+  const closePopupButton = document.getElementById('close-btn');
+  const popup = document.getElementById('popup');
+  const overlay = document.getElementById('overlay');
+  
+  openPopupButton.addEventListener('click', () => {
+    popup.classList.add('show');
+    overlay.classList.add('show');
+  });
+  
+  closePopupButton.addEventListener('click', () => {
+    popup.classList.remove('show');
+    overlay.classList.remove('show');
+  });
+  
+  overlay.addEventListener('click', () => {
+      popup.classList.remove('show');
+
+      overlay.classList.remove('show');
+    });
+  
+  </script>
+  
+  <script>
+
+      // Получаем ссылку на кнопку "Выбрать все"
+      const selectAllBtn = document.getElementById("select-all-btn");
+  
+      // Получаем ссылки на все checkbox на странице
+      const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    
+      // Добавляем обработчик события на кнопку "Выбрать все"
+      selectAllBtn.addEventListener("click", function (event) {
+        var checkboxev = event.target;
+
+          selectAllBtn.classList.toggle("pressed");
+        // Итерируемся по всем checkbox на странице
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.id !== 'superstatus') {
+          // Меняем состояние checkbox на противоположное
+          checkbox.checked = !checkbox.checked;
+            }
+        });
+    
+      });
+
+
+        const deleteButton = document.querySelector('.delete-button');
+
+        checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', (event) => {
+            if (checkbox.id !=  'superstatus'){
+                const checked = document.querySelectorAll('input[type=checkbox]:checked');
+            if (checked.length > 0) {
+            deleteButton.classList.add('visible');
+            } else {
+            deleteButton.classList.remove('visible');
+            }
+            };
+            
+        });
+
+        deleteButton.addEventListener('click', () =>{
+            selectAllBtn.classList.toggle("pressed");
+            deleteButton.classList.remove('visible');
+            console.log(1)
+        });
+
+
+        selectAllBtn.addEventListener('click', () =>{
+            const checked = document.querySelectorAll('input[type=checkbox]:checked');
+
+            if (checked.length > 0) {
+            deleteButton.classList.add('visible');
+            } else {
+            deleteButton.classList.remove('visible');
+            }
+        });    
+    });
+        
+
+      document.addEventListener('htmx:afterSwap', function(event) {
+
+
+       // Получаем ссылку на кнопку "Выбрать все"
+      const selectAllBtn = document.getElementById("select-all-btn");
+  
+      // Получаем ссылки на все checkbox на странице
+      const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    
+      // Добавляем обработчик события на кнопку "Выбрать все"
+      selectAllBtn.addEventListener("click", function (event) {
+        var checkboxev = event.target;
+
+          selectAllBtn.classList.toggle("pressed");
+        // Итерируемся по всем checkbox на странице
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.id !== 'superstatus') {
+          // Меняем состояние checkbox на противоположное
+          checkbox.checked = !checkbox.checked;
+            }
+        });
+    
+      });
+
+
+        const deleteButton = document.querySelector('.delete-button');
+
+        deleteButton.addEventListener('click', () =>{
+            selectAllBtn.classList.toggle("pressed");
+            deleteButton.classList.remove('visible');
+            console.log(1)
+        });
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', () => {
+                
+                if (checkbox.id !=  'superstatus'){
+                    const checked = document.querySelectorAll('input[type=checkbox]:checked');
+                if (checked.length > 0) {
+                deleteButton.classList.add('visible');
+                } else {
+                deleteButton.classList.remove('visible');
+                }
+                }
+                
+            });
+
+        
+        selectAllBtn.addEventListener('click', () =>{
+            const checked = document.querySelectorAll('input[type=checkbox]:checked');
+            if (checked.length > 0) {
+            deleteButton.classList.add('visible');
+            } else {
+            deleteButton.classList.remove('visible');
+            }
+        });    
+    });
+    });
+    
+    </script>
+    
+    
+{% endblock jsend %}
+
+

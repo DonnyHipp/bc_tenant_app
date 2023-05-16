@@ -1,0 +1,41 @@
+<div class="userhead row" >
+    <div class="col-5">
+        Пользователь
+    </div>
+    <div class=" col-7">
+        Почта
+    </div>
+</div>
+<div class="usertable" id="user_table">
+
+{% for user in users %}
+<div class="useritem row" style="display: flex;
+align-items: center;">
+    
+    <div class="username col-5">
+
+        <label class="checkbox">
+            <input type="checkbox" class="document-checkbox" name="mes_id" value="{{user.pk}}">
+            <span class="checkmark"></span>
+        </label>
+        <span class="text-truncate" style="margin-left: 10px;">{{ user.first_name }}</span> 
+    </div>
+
+    <div class="usermail col-5">
+        {{ user.email }}
+    </div>
+    <div class="usersettings col-2">
+        
+           <button class="editbutton" type="button" data-staff="{{ user.is_staff }}" data-user_id="{{ user.id }}" data-username="{{ user.first_name }}" data-email="{{ user.email }}">Изменить</button>
+
+            <input type="button" class="delbtnuser"  name="Удалить" value="Удалить" 
+            hx-target="#userlist" hx-delete="{% url 'del_user' user.pk %}" hx-confirm="Вы точно хотите удалить пользователя {{ user.email }}?">
+       
+        </form>
+    </div>
+
+        
+    </label>
+</div>
+{% endfor%}
+</div>

@@ -1,0 +1,18 @@
+services:
+  web-app:
+    build:
+      context: .
+    ports:
+      - "8889:8000"
+    volumes:
+      - ./tenant_project:/tenant_project
+    platform: linux
+    command: >
+      sh -c "python3 manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+
+  db:
+    image: sqlite:latest
+    volumes:
+    - ./db.sqlite3:/tenant_project/db.sqlite3

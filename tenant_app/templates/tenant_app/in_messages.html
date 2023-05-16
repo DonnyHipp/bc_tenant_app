@@ -1,0 +1,95 @@
+<script>
+    
+</script>
+
+<div >
+
+    <h1 style="margin-bottom: 20px;"> Входящие сообщения </h1>
+    
+        {% csrf_token %}
+        <input style="width: 300px;" type="search" 
+        name="search" placeholder="Поиск..." 
+        hx-post="{% url 'filter_email' %}" 
+        hx-trigger="keyup changed delay:500ms, search" 
+        hx-target="#mail_short" 
+        hx-indicator=".htmx-indicator">
+    
+        <form action="{% url 'del_mes' %} " method="post" name="delform" class="delformfirst">
+
+            {% csrf_token %}
+        <div style="display: flex; margin-top: 10px; align-items:center;">
+            <input id="select-all-btn" class="checkmarkbtn" type="button">
+            <button type="submit" class="delete-button mainbutton" style="margin-left: 20px; width: calc( var(--index) *12 );">Удалить выбранные письма</button>
+        </div>
+        
+    
+            <div class="mailbox">
+                <div class="mail_short" id="mail_short">
+                    {% if messages %}
+                    {% for mes in messages %}
+                    <a hx-get="{% url 'get_email_text' mes.id %}" hx-target="#email-details"hx-trigger="click" class="maillink">
+                        <div class="shortmes">
+                            
+                            <div class="topmes">
+                                <label class="checkbox">
+                                    <input type="checkbox" class="document-checkbox" name="mes_id" value="{{mes.pk}}">
+                                    <span class="checkmark"></span>
+                                  </label>
+                                <div class="from">{{ mes.sender }}</div>
+                                <div class="date">{{ mes.date_sent }}</div>
+                            </div>
+                            
+                            <div class="subject text-truncate">{{ mes.subject }}</div>
+                            
+                        </div>
+                    </a>
+                    
+                    {% endfor %}
+                    {% else %}
+                    <div class="shortmes">
+                    <p>Сообщений нет</p>    
+                    </div>
+                    {% endif %}
+                    
+                </div>
+                    
+                <div class="longmes" id="email-details">
+                    {% if messages %}
+                    <div class="mes_det">
+                        <div class="mes_det_head">
+                            <div class="mes_det_from">
+                                <span class="mes_det_cap">От: </span> {{messages.first.sender}}
+                            </div>
+                            <div class="mes_det_to">
+                                <span class="mes_det_cap">Получатели: </span>
+                                {% for rec in messages.first.recipients.all %}
+                                <span class="mes_det_rec"> {{rec.email}};</span>
+                    
+                                {% endfor %}
+                            </div>
+                        </div>
+                    
+                        <div class="mes_det_text">
+                    
+                            <div class="mes_det_sub">
+                                <span class="mes_det_cap">Тема: </span><br>
+                                {{messages.first.subject}}
+                            </div>
+                            <div class="mes_det_mailtxt">
+                                <span class="mes_det_cap">Текст: </span> <br>
+                                {{messages.first.message}}
+                            </div>
+                    
+                    </div>
+                    
+                        
+                        
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+</div>
+
+
+
