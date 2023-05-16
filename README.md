@@ -47,3 +47,33 @@ docker-compose up -d
 - **Настройка Nginx:** Для настройки Nginx в качестве веб-сервера, обратитесь к документации Nginx и сконфигурируйте его в соответствии с вашими требованиями.
 - **Добавление почтового сервера:** Для добавления почтового сервера, отредактируйте файл settings.py и укажите параметры вашего почтового сервера.
 
+
+Скрины: 
+окно входа:
+<img width="1389" alt="Снимок экрана 2023-05-16 в 20 30 42" src="https://github.com/DonnyHipp/bc_tenant_app/assets/86925837/210769cf-111b-4cd7-ac36-21da2361d689">
+
+
+
+окно редактирования списка расслки:
+<img width="1400" alt="Снимок экрана 2023-05-16 в 20 30 34" src="https://github.com/DonnyHipp/bc_tenant_app/assets/86925837/36ec80fd-13f8-4c79-b63f-d5832a826b50">
+
+
+окно формы для добваления или изменения пользователя:
+<img width="749" alt="Снимок экрана 2023-05-16 в 20 30 23" src="https://github.com/DonnyHipp/bc_tenant_app/assets/86925837/6fc4f740-1d1d-494c-b641-798b2edb70fc">
+
+
+окно пользователей:
+<img width="1378" alt="Снимок экрана 2023-05-16 в 20 30 11" src="https://github.com/DonnyHipp/bc_tenant_app/assets/86925837/3c6fa953-70ef-468a-8f99-8566c4abeda3">
+
+
+окно входящий сообщений:
+<img width="1375" alt="Снимок экрана 2023-05-16 в 20 24 49" src="https://github.com/DonnyHipp/bc_tenant_app/assets/86925837/bced2f77-bb9f-4024-97dc-1159df812e27">
+
+
+окно отправки письма:
+<img width="711" alt="Снимок экрана 2023-05-16 в 20 26 07" src="https://github.com/DonnyHipp/bc_tenant_app/assets/86925837/de39a59e-bffc-4010-999c-d7d81ea9ee2b">
+
+
+
+
+
