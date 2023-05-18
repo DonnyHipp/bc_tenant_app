@@ -11,7 +11,6 @@ urlpatterns = [
     path('users', users, name='users'),
     path('in_messages', in_messages, name='inmes'),
     path('out_messages', out_messages, name='outmes'),
-
     path('send_mes', send_mes, name='send_mes'),
     path('subm_mail', submit_mail, name='subm_mail'),
     path('get_email_text/<int:pk>/', get_email_text, name='get_email_text'),

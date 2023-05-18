@@ -5,7 +5,10 @@
         <div class="shortmes">
             
             <div class="topmes">
-                <input type="checkbox">
+                <label class="checkbox">
+                    <input type="checkbox" class="document-checkbox" name="mes_id" value="{{mes.pk}}">
+                    <span class="checkmark"></span>
+                  </label>
                 <div class="from ">{{ mes.sender }}</div>
                 <div class="date">{{ mes.date_sent }}</div>
             </div>
