@@ -25,7 +25,6 @@ from django.utils.timezone import localtime, now
 from .models import *
 from .forms import LoginUserForm
 from .business_logic import check_mes
-from django_htmx.http import HttpResponseClientRefresh
 
 
 def ajax_required(view_func):
