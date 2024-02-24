@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "bc-tenant"
+version = "0.1.0"
+description = ""
+authors = ["DonnyHipp <toloknov.igor123@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.2"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
